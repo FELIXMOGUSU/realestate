@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NkaBoma | Home, Rentals, Airbnb & Property Sales</title>
+  <title>Kwangu | Home, Rentals, Airbnb & Property Sales</title>
+  <meta name="description" content="Kwangu – Find Airbnb stays, rental homes, and houses for sale across Kenya. Privacy-first rental listings and trusted property sales." />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="dns-prefetch" href="https://images.unsplash.com" />
   <style>
     :root {
       --mint: #63e6be;
@@ -715,10 +718,58 @@
 
     @media (max-width: 780px) {
       .navbar {
-        flex-direction: column;
+        flex-wrap: wrap;
+        padding: 12px 0;
+      }
+
+      nav {
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease;
+      }
+
+      nav.open {
+        max-height: 400px;
       }
 
       nav ul {
+        flex-direction: column;
+        gap: 0;
+        padding: 8px 0 12px;
+      }
+
+      nav ul li a {
+        display: block;
+        padding: 10px 4px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 6px;
+        background: none;
+        border: none;
+      }
+
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--deepblue);
+        border-radius: 2px;
+        transition: var(--transition);
+      }
+
+      .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .hamburger.open span:nth-child(2) { opacity: 0; }
+      .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+      .nav-actions {
+        width: 100%;
         justify-content: center;
       }
 
@@ -736,13 +787,39 @@
         grid-template-columns: 1fr;
       }
 
-      .hero {
-        padding-top: 40px;
-      }
+      .hero { padding-top: 36px; }
 
       .cta-box {
-        padding: 28px;
+        padding: 24px;
+        flex-direction: column;
+        text-align: center;
       }
+
+      .plan-card.featured { transform: none; }
+
+      section { padding: 52px 0; }
+
+      .btn { padding: 12px 16px; font-size: 0.95rem; }
+
+      .property-grid { grid-template-columns: 1fr; }
+
+      .search-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .search-grid { grid-template-columns: 1fr; }
+      .hero-badges { gap: 8px; }
+      .badge { font-size: 0.85rem; padding: 8px 12px; }
+      .hero h1 { font-size: 2rem; }
+    }
+
+    /* Show hamburger only on mobile */
+    .hamburger { display: none; }
+
+    /* Perf: avoid layout shifts on images */
+    img { height: auto; }
+    .property-image img, .hero-image img {
+      will-change: transform;
     }
   </style>
 </head>
@@ -754,14 +831,18 @@
   <header>
     <div class="container navbar">
       <a href="#home" class="logo">
-        <div class="logo-badge">N</div>
+        <div class="logo-badge">K</div>
         <div>
-          <div>NkaBoma</div>
-          <small style="font-size: 0.78rem; color: #5f7488; font-weight: 700;">Home, linked beautifully</small>
+          <div>Kwangu</div>
+          <small style="font-size: 0.78rem; color: #5f7488; font-weight: 700;">Your home, your way</small>
         </div>
       </a>
 
-      <nav>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav id="mainNav">
         <ul>
           <li><a href="#listings">Listings</a></li>
           <li><a href="#how-it-works">How It Works</a></li>
@@ -784,7 +865,7 @@
         <div>
           <h1>Find your <span>home</span>, stay by stay, rent by rent, or buy for life.</h1>
           <p>
-            NkaBoma is a modern real estate platform for Airbnb stays, rental homes, and houses for sale. Rental listings protect owner privacy by showing the house without the exact location until a client books an agent viewing.
+            Kwangu is a modern real estate platform for Airbnb stays, rental homes, and houses for sale. Rental listings protect owner privacy by showing the house without the exact location until a client books an agent viewing.
           </p>
 
           <div class="hero-badges">
@@ -835,7 +916,7 @@
 
         <div class="hero-visual">
           <div class="glass-card hero-image">
-            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80" alt="Modern house exterior" />
+            <img loading="eager" fetchpriority="high" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80" alt="Modern house exterior" />
           </div>
           <div class="hero-floating">
             <div class="stats-card">
@@ -903,7 +984,7 @@
         <div class="property-grid" id="propertyGrid">
           <article class="property-card" data-type="airbnb" data-city="nairobi" data-budget="mid" data-beds="2">
             <div class="property-image">
-              <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80" alt="Airbnb apartment" />
+              <img loading="lazy" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80" alt="Airbnb apartment" />
               <div class="pill">Airbnb</div>
             </div>
             <div class="property-content">
@@ -924,7 +1005,7 @@
 
           <article class="property-card" data-type="rent" data-city="kisii" data-budget="low" data-beds="3">
             <div class="property-image">
-              <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1200&q=80" alt="Rental family home" />
+              <img loading="lazy" src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1200&q=80" alt="Rental family home" />
               <div class="pill">Rent</div>
             </div>
             <div class="property-content">
@@ -946,7 +1027,7 @@
 
           <article class="property-card" data-type="sale" data-city="nakuru" data-budget="high" data-beds="4">
             <div class="property-image">
-              <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80" alt="House for sale" />
+              <img loading="lazy" src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80" alt="House for sale" />
               <div class="pill">Buy</div>
             </div>
             <div class="property-content">
@@ -967,7 +1048,7 @@
 
           <article class="property-card" data-type="airbnb" data-city="mombasa" data-budget="mid" data-beds="1">
             <div class="property-image">
-              <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80" alt="Beach Airbnb" />
+              <img loading="lazy" src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80" alt="Beach Airbnb" />
               <div class="pill">Airbnb</div>
             </div>
             <div class="property-content">
@@ -988,7 +1069,7 @@
 
           <article class="property-card" data-type="rent" data-city="nairobi" data-budget="mid" data-beds="2">
             <div class="property-image">
-              <img src="https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&w=1200&q=80" alt="Rental apartment" />
+              <img loading="lazy" src="https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&w=1200&q=80" alt="Rental apartment" />
               <div class="pill">Rent</div>
             </div>
             <div class="property-content">
@@ -1010,7 +1091,7 @@
 
           <article class="property-card" data-type="sale" data-city="kisumu" data-budget="high" data-beds="3">
             <div class="property-image">
-              <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80" alt="House on sale" />
+              <img loading="lazy" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80" alt="House on sale" />
               <div class="pill">Buy</div>
             </div>
             <div class="property-content">
@@ -1235,9 +1316,9 @@
       <div class="container">
         <div class="cta-box">
           <div>
-            <h2 style="margin-bottom:10px;">A strong name choice: <span style="color: var(--mint);">NkaBoma</span></h2>
+            <h2 style="margin-bottom:10px;">A strong name choice: <span style="color: var(--mint);">Kwangu</span></h2>
             <p>
-              “Nka” connects to the idea of home in Kisii, while “Boma” feels classic, warm, and local. Together, NkaBoma sounds trustworthy, memorable, and perfectly suited for a property marketplace.
+              “Nka” connects to the idea of home in Kisii, while “Boma” feels classic, warm, and local. Together, Kwangu sounds trustworthy, memorable, and perfectly suited for a property marketplace.
             </p>
           </div>
           <a href="#owners" class="btn btn-primary">Build This Site</a>
@@ -1250,8 +1331,8 @@
       <div class="footer-grid">
         <div>
           <div class="logo" style="color:#fff; margin-bottom: 14px;">
-            <div class="logo-badge">N</div>
-            <div>NkaBoma</div>
+            <div class="logo-badge">K</div>
+            <div>Kwangu</div>
           </div>
           <p style="max-width: 380px;">A stylish property platform for Airbnb stays, rental homes, and houses for sale across Kenya.</p>
         </div>
@@ -1274,14 +1355,14 @@
         <div>
           <h4>Contact</h4>
           <ul>
-            <li>Email: <a href="mailto:hello@nkaboma.co.ke">hello@nkaboma.co.ke</a></li>
+            <li>Email: <a href="mailto:felixmogusu@gmail.com">felixmogusu@gmail.com</a></li>
             <li>Phone: +254 700 000 000</li>
             <li>Address: Nairobi, Kenya</li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© 2026 NkaBoma. All rights reserved.</span>
+        <span>© 2026 Kwangu. All rights reserved.</span>
         <span>Built with HTML, CSS, and JavaScript.</span>
       </div>
     </div>
@@ -1305,6 +1386,23 @@
     const simulateUpgradeBtn = document.getElementById('simulateUpgrade');
     const listingCount = document.getElementById('listingCount');
     const planNotice = document.getElementById('planNotice');
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mainNav = document.getElementById('mainNav');
+    if (hamburger && mainNav) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mainNav.classList.toggle('open');
+      });
+      // Close nav when a link is clicked
+      mainNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('open');
+          mainNav.classList.remove('open');
+        });
+      });
+    }
 
     let ownerListingsUsed = 5;
 
